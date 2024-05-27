@@ -21,35 +21,38 @@ library(tidyverse)
 # 1.0 USER INTERFACE ----
 
 ui <- navbarPage(
+ 
   title = "Cantonal Voting",
-  tabPanel("Data Explorer",
+  
+  theme = bslib::bs_theme(
+    version = 4,
+    bootswatch = "minty",
+  ),
+  
+  tabPanel(
+    title = "Explore",
            sidebarLayout(
+             
              sidebarPanel(
-               selectInput("dataset", "Choose a dataset", choices = c("iris", "mtcars")),
+               width = 3,
+               h1("Data Explorer"),
+               
+               selectInput(
+                 inputId = "", 
+                 label = "Choose a dataset", 
+                 choices = c("iris", "mtcars")),
                uiOutput("variable"),
                uiOutput("plot")
-             ),
+             ), # input tbd (two filters, canton and topic)
+             
              mainPanel(
                h3("Data Summary"),
                verbatimTextOutput("summary"),
                h3("Data Structure"),
                verbatimTextOutput("structure")
-             )
+             ) # output tbd (table)
            )
   ),
-  tabPanel("Modeling",
-           sidebarLayout(
-             sidebarPanel(
-               selectInput("dataset2", "Choose a dataset", choices = c("iris", "mtcars")),
-               uiOutput("variable2"),
-               uiOutput("model")
-             ),
-             mainPanel(
-               h3("Model Summary"),
-               verbatimTextOutput("model_summary")
-             )
-           )
-  )
 )
 
 
@@ -58,7 +61,22 @@ ui <- navbarPage(
 
 server <- function(input, output) {
   
-  # insert code for Server here
+  rv <- reactiveValues()
+  
+  observe({
+    
+    rv$dataset <- data_list %>% pluck(input$dataset_choice)
+  })
+  
+  output$variable <- renderUI({
+    
+    selectInput(
+      inputId = "variable_choice",
+      label = "Choose a variable",
+      choices = names(rv$dataset),
+      selected = names(rv$dataset)[1]
+    ) # output tbd (table)
+  })
   
 }
 
