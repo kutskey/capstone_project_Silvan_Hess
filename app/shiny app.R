@@ -21,7 +21,7 @@ library(tidyverse)
 # 1.0 USER INTERFACE ----
 
 ui <- navbarPage(
-  title = "Shiny App",
+  title = "Cantonal Voting",
   tabPanel("Data Explorer",
            sidebarLayout(
              sidebarPanel(
