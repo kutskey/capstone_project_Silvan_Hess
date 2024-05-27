@@ -12,3 +12,6 @@ data <- fromJSON("data_orig/swiss_voting.json")
 
 #turn json into df
 df <- as.data.frame(data$items)
+
+#save the data
+save(df, file = "data_prep/swiss_voting.RData")
