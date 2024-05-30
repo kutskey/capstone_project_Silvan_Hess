@@ -4,11 +4,11 @@
 #### Data Mining for the Social Sciences using R / University of Lucerne / Spring Term 2024 / Dr. Andrea De Angelis
 
 ## Overview
-This web application provides access to canton-level voting from 1957 until 2024.
+This web application provides access to switzerland canton-level voting from 1957 until 2024.
 
 ### Features
 - **Customizable Searches**: select canton of interest
-- **Clear and Structured Table**: display only the most import and information about the votes.
+- **Clear and Structured Table**: display date, title and outcome of votes
 
 ### Source
 This application uses the c2d (Center for Reseach on Direct Democracy) database which is publicly available through https://c2d.ch/.
