@@ -9,7 +9,7 @@ library(tidyverse)
 
 # LOAD DATASETS ----
 
-load("data_prep/app_data.RData")
+load("app_data.RData")
 
 # 1.0 USER INTERFACE ----
 

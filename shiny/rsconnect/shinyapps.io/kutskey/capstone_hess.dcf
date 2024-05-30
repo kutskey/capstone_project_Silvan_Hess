@@ -1,0 +1,12 @@
+name: capstone_hess
+title: capstone_hess
+username: kutskey
+account: kutskey
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12096021
+bundleId: 8679339
+url: https://kutskey.shinyapps.io/capstone_hess/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

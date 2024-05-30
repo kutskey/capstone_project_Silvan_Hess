@@ -81,5 +81,5 @@ filters <- list(
 )
 
 # save the data
-save(app_table, filters, file = "data_prep/app_data.RData")
+save(app_table, filters, file = "shiny/app_data.RData")
 

@@ -7,6 +7,7 @@
 .xlsx
 .Rproj.user
 *.Rproj
+*.RData
 *.json
 *.csv
 *.xlsx
