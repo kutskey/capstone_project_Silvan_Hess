@@ -49,8 +49,8 @@ glimpse(df)
 head(df$categories, 10)
 head(df$title, 1)
 
-# only keep votes_yes, votes_no, canton, tags, question, question_en, title and date
-df_selected <- df %>% select(votes_yes, votes_no, canton, tags, question, question_en, title, date)
+# only keep most important variables
+df_selected <- df %>% select(canton, date, title, result)
 
 # unnest variable title
 unnested_df <- df_selected %>%
@@ -59,15 +59,14 @@ unnested_df <- df_selected %>%
 # rename columns
 renamed_df <- unnested_df %>%
   rename(
-    title_de = de,
+    title = de,
     title_en = en,
     title_fr = fr,
-    question_de = question,
   )
 
-# remove title_fr
+# remove title_fr and tile_fr
 renamed_df <- renamed_df %>%
-  select(-title_fr)
+  select(-title_fr, -title_en)
 
 # rename data frame to app_table and remove the other data frames
 app_table <- renamed_df
