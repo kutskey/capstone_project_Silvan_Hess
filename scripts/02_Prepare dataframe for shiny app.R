@@ -9,7 +9,7 @@ library(tidyverse)
 # load the data
 load("data_prep/swiss_voting.RData")
 
-# prepare data for shiny app ----
+# prepare filters for shiny app ----
 
 # overview
 glimpse(df)
@@ -41,3 +41,46 @@ tags <- unique(tags)
 
 # sort alphabetically
 tags <- sort(tags)
+
+# select variables for shiny app ----
+
+#overview
+glimpse(df)
+head(df$categories, 10)
+head(df$title, 1)
+
+# only keep votes_yes, votes_no, canton, tags, question, question_en, title and date
+df_selected <- df %>% select(votes_yes, votes_no, canton, tags, question, question_en, title, date)
+
+# unnest variable title
+unnested_df <- df_selected %>%
+  unnest(cols = c(title))
+
+# rename columns
+renamed_df <- unnested_df %>%
+  rename(
+    title_de = de,
+    title_en = en,
+    title_fr = fr,
+    question_de = question,
+  )
+
+# remove title_fr
+renamed_df <- renamed_df %>%
+  select(-title_fr)
+
+# rename data frame to app_table and remove the other data frames
+app_table <- renamed_df
+rm(df_selected, unnested_df, renamed_df)
+
+# save all the data ----
+
+#create list of filters
+filters <- list(
+  cantons = cantons,
+  tags = tags
+)
+
+# save the data
+save(app_table, filters, file = "data_prep/app_data.RData")
+
