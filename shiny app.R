@@ -14,7 +14,7 @@ load("data_prep/app_data.RData")
 # 1.0 USER INTERFACE ----
 
 ui <- navbarPage(
-  title = "Cantonal Voting",
+  title = "Kantonale Abstimmungen",
   
   theme = bslib::bs_theme(
     version = 4,
@@ -22,21 +22,21 @@ ui <- navbarPage(
   ),
   
   tabPanel(
-    title = "Explore",
+    title = "Tabellenansicht",
     sidebarLayout(
       sidebarPanel(
         width = 3,
-        h1("Data Explorer"),
+        h1("Filter"),
         
         selectInput(
           inputId = "selected_canton", 
-          label = "Select Canton:", 
-          choices = unique(app_table$canton)
+          label = "Kanton:", 
+          choices = unique(filters$cantons)
         )
       ),
       
       mainPanel(
-        h3("Table Summary"),
+        h3("Übersicht Abstimmungen"),
         tableOutput("canton_table")
       )
     )
@@ -49,14 +49,19 @@ ui <- navbarPage(
 
 server <- function(input, output) {
   
+  # Reactive expression to filter data based on selected canton
   filtered_data <- reactive({
-    app_table[app_table$canton == input$selected_canton, ]
+    app_table %>%
+      filter(canton == input$selected_canton) %>% 
+      select(-canton) %>% # Exclude the "canton" column
+      group_by() # # Group by all remaining columns
   })
   
   # Render the filtered data as a table
   output$canton_table <- renderTable({
     filtered_data()
   })
+    
   
 }
 
