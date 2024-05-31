@@ -42,7 +42,7 @@ df_selected <- df %>% select(canton, date, title, result)
 unnested_df <- df_selected %>%
   unnest(cols = c(title))
 
-# rename columns
+# rename columns into german
 renamed_df <- unnested_df %>%
   rename(
     Titel = de,
@@ -66,7 +66,6 @@ app_table <- app_table %>%
 app_table <- app_table %>%
   mutate(Resultat = if_else(Resultat == "No", "abgelehnt", Resultat))
 
-stop()
 
 # create table of tags + count----
 
@@ -88,6 +87,13 @@ data_counts <- data_unnested %>%
 # Sort by canton and count (largest to smallest)
 tags_df <- data_counts %>%
   arrange(canton, desc(count))
+
+# rename columns into german
+tags_df <- tags_df %>%
+  rename(
+    Thema = tags,
+    Anzahl = count
+  )
 
 # save all the data ----
 

@@ -14,7 +14,9 @@ load("app_data.RData")
 # 1.0 USER INTERFACE ----
 
 ui <- navbarPage(
-  title = "Kantonale Abstimmungen",
+  title = HTML("Kantonale Abstimmungen<br><small>Stand: 2024-04-27</small>"),
+ 
+  
   
   theme = bslib::bs_theme(
     version = 4,
@@ -22,7 +24,7 @@ ui <- navbarPage(
   ),
   
   tabPanel(
-    title = "Kantonsansicht",
+    title = "Abstimmungsübersicht",
     sidebarLayout(
       sidebarPanel(
         width = 3,
@@ -44,10 +46,18 @@ ui <- navbarPage(
   
   # create a second tab where i show a table called tags_table, without a sidebar
   tabPanel(
-    title = "Themenansicht",
-    
-      
+    title = "Themenübersicht",
+    sidebarLayout(
+      sidebarPanel(
+        width = 3,
+        h1("Filter"),
         
+        selectInput(
+          inputId = "selected_canton", 
+          label = "Kanton:", 
+          choices = unique(filters$cantons)
+        )
+      ),
       
       
       mainPanel(
@@ -56,7 +66,7 @@ ui <- navbarPage(
       )
     )
   
-  
+  )
 )
 
 
@@ -65,6 +75,7 @@ ui <- navbarPage(
 
 server <- function(input, output) {
   
+  # tab 1
   # Reactive expression to filter data based on selected canton
   filtered_data <- reactive({
     app_table %>%
@@ -73,13 +84,26 @@ server <- function(input, output) {
       group_by() # # Group by all remaining columns
   })
   
+  # tab 2
+  # Reactive expression to filter data based on selected canton
+  grouped_data <- reactive({
+    tags_df %>%
+      filter(canton == input$selected_canton) %>% 
+      select(-canton) %>% # Exclude the "canton" column
+      group_by() # # Group by all remaining columns
+  })
+  
+
+  # tab 1  
   # Render the filtered data as a table
   output$canton_table <- renderTable({
     filtered_data()
   })
-# Render the filtered data as a table
+  
+  # tab 2
+  # Render the filtered data as a table
   output$tags_table <- renderTable({
-    tags_df
+    grouped_data()
   })    
   
 }
