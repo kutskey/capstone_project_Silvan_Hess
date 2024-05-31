@@ -22,7 +22,7 @@ ui <- navbarPage(
   ),
   
   tabPanel(
-    title = "Tabellenansicht",
+    title = "Kantonsansicht",
     sidebarLayout(
       sidebarPanel(
         width = 3,
@@ -40,7 +40,23 @@ ui <- navbarPage(
         tableOutput("canton_table")
       )
     )
-  )
+  ), 
+  
+  # create a second tab where i show a table called tags_table, without a sidebar
+  tabPanel(
+    title = "Themenansicht",
+    
+      
+        
+      
+      
+      mainPanel(
+        h3("Übersicht Themen"),
+        tableOutput("tags_table")
+      )
+    )
+  
+  
 )
 
 
@@ -61,7 +77,10 @@ server <- function(input, output) {
   output$canton_table <- renderTable({
     filtered_data()
   })
-    
+# Render the filtered data as a table
+  output$tags_table <- renderTable({
+    tags_df
+  })    
   
 }
 
