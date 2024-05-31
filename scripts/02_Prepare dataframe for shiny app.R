@@ -28,7 +28,7 @@ cantons <- sort(cantons)
 #print out object type of cantons
 class(cantons)
 
-# select variables for shiny app ----
+# create table of dates + titles + results ----
 
 #overview
 glimpse(df)
@@ -66,25 +66,28 @@ app_table <- app_table %>%
 app_table <- app_table %>%
   mutate(Resultat = if_else(Resultat == "No", "abgelehnt", Resultat))
 
-# create a df of the tags and their counts ----
+stop()
 
-# create a list of all the tags
-tags <- df$tags
+# create table of tags + count----
 
-#unlist the tags
-tags <- unlist(tags)
+# create a list of all the tags grouped by canton
+tags_by_canton <- df %>% group_by(canton) %>% summarise(tags = list(tags))
 
-# Calculate the unique character strings
-unique_chars <- unique(tags)
+# turn the lists in tags_by_canton$tags into a character vector
+tags_by_canton$tags <- lapply(tags_by_canton$tags, unlist)
 
-# Step 3: Count the occurrences of each unique character string
-char_counts <- table(tags)
+# Unnest the tags column
+data_unnested <- tags_by_canton %>%
+  unnest(tags)
 
-# Step 4: Create a dataframe with the unique character strings and their counts
-tags_df <- data.frame(Character = names(char_counts), Count = as.integer(char_counts))
+# Count the occurrences of each unique character string within each canton
+data_counts <- data_unnested %>%
+  group_by(canton, tags) %>%
+  summarise(count = n(), .groups = 'drop')
 
-# sort biggest to smallest count
-tags_df <- tags_df[order(-tags_df$Count), ]
+# Sort by canton and count (largest to smallest)
+tags_df <- data_counts %>%
+  arrange(canton, desc(count))
 
 # save all the data ----
 
