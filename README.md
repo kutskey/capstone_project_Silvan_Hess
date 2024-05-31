@@ -8,7 +8,7 @@ This web application provides access to switzerland canton-level voting from 195
 
 ### Features
 - **Customizable Searches**: select canton of interest
-- **Clear and Structured Table**: display date, title and outcome of votes
+- **clear and structured tables**: one table displays initiatives/referendums plus outcome, second table displays topics and their relevance by counting tags
 
 ### Source
 This application uses the c2d (Center for Reseach on Direct Democracy) database which is publicly available through https://c2d.ch/.
