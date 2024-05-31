@@ -5,7 +5,7 @@ account: kutskey
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12096021
-bundleId: 8679339
+bundleId: 8679465
 url: https://kutskey.shinyapps.io/capstone_hess/
 version: 1
 asMultiple: FALSE

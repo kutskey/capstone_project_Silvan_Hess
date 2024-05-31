@@ -28,20 +28,6 @@ cantons <- sort(cantons)
 #print out object type of cantons
 class(cantons)
 
-## tags ----
-
-# create a list of all possible tags
-tags <- df$tags %>% unique()
-
-# create a character vector of all tags
-tags <- unlist(tags)
-
-# delete double entries
-tags <- unique(tags)
-
-# sort alphabetically
-tags <- sort(tags)
-
 # select variables for shiny app ----
 
 #overview
@@ -59,27 +45,54 @@ unnested_df <- df_selected %>%
 # rename columns
 renamed_df <- unnested_df %>%
   rename(
-    title = de,
+    Titel = de,
     title_en = en,
     title_fr = fr,
+    Datum = date,
+    Resultat = result
   )
 
 # remove title_fr and tile_fr
 renamed_df <- renamed_df %>%
   select(-title_fr, -title_en)
 
-# rename data frame to app_table and remove the other data frames
+#rename df and remove the rest
 app_table <- renamed_df
 rm(df_selected, unnested_df, renamed_df)
+
+# translate results into german
+app_table <- app_table %>%
+  mutate(Resultat = if_else(Resultat == "Yes", "angenommen", Resultat))
+app_table <- app_table %>%
+  mutate(Resultat = if_else(Resultat == "No", "abgelehnt", Resultat))
+
+# create a df of the tags and their counts ----
+
+# create a list of all the tags
+tags <- df$tags
+
+#unlist the tags
+tags <- unlist(tags)
+
+# Calculate the unique character strings
+unique_chars <- unique(tags)
+
+# Step 3: Count the occurrences of each unique character string
+char_counts <- table(tags)
+
+# Step 4: Create a dataframe with the unique character strings and their counts
+tags_df <- data.frame(Character = names(char_counts), Count = as.integer(char_counts))
+
+# sort biggest to smallest count
+tags_df <- tags_df[order(-tags_df$Count), ]
 
 # save all the data ----
 
 #create list of filters
 filters <- list(
-  cantons = cantons,
-  tags = tags
+  cantons = cantons
 )
 
 # save the data
-save(app_table, filters, file = "shiny/app_data.RData")
+save(app_table, filters, tags_df, file = "shiny/app_data.RData")
 
