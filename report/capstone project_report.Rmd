@@ -5,26 +5,44 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## 1. Intended Goals and Main Features
 
-## R Markdown
+### Intention of the Project
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+The intentional goal of this project was to correlate climate events with voting behavior. For this purpose the idea was to use cantonal voting data from 1957 until 2024 and find existing theories about the correlation of climatic events and voting behavior.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+### Adaptation of the Project
 
-```{r cars}
-summary(cars)
-```
+There is only little data available because cantonal initiatives and referendums are rarely about the topic of climate change. Nevertheless, the data is very interesting in terms of regional differences in voting behavior and voting topics. Furthermore, the data is very clean and easy to handle due to the nice documentation on the website of c2d.ch. Since this is my first data science project, I will focus on the data cleaning and data analysis part. Also , I will make a shiny app, that gives the (swiss) user a quick overview what was going on in his canton in the last 70 years in terms of cantonal initiatives and referendums.
 
-## Including Plots
+### Main Features
 
-You can also embed plots, for example:
+The main feature of this project is a shiny app with two tabs. The first tab shows a table with all initiatives and referendums in the selected canton. The second tab shows a table with all the topics that were voted on in the selected canton with the number of occurrences. The user can select the canton he is interested in and the tables will update accordingly. The app is designed to be slim and easy to use, so the user can get a quick overview of the voting behavior in his canton.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+## 2. Tasks and Difficulties
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Shiny App
+
+First, i had to set up my git hub repository and folder structure. Next, i had to get used to nested structure of the json file and how to extract to the data i need. Then, i had to prepare the data in the way that i can use it for the app, i.e. creating the tables and also the list for the filter (can be observed in the R Scripts in folder "scripts"). After that, i had to figure out how to program the shiny app in the way i intended to. Lastly, i had to publish the app and finish the project.
+
+### Climate Change Regression Analysis
+
+For the climate change part of the project which i didn't proceed with (can be observed in branch climate, the following tasks were at hand. First, use the API of the Swiss Parliament to get more data on climate change issues besides cantonal initiatives and referendums. Unfortunately, the API did not work for me. I couldn't figure out if it was a problem with the API or with my code. Then, subset the data of sub national voting to extract the data on climate change related voting. I realized that there is not enough data on climate change related voting to make a meaningful analysis, as described in chapter one.
+
+## 3. Review of Activities
+
+Normally i run into the problem of getting lost in minor details and not finishing a project. This time I tried to focus on the main goal to use my time efficiently and get something simple but useful done in the end. This was very important to me since this was my first application of my knowledge in data mining which i just recently learned in this course.
+
+I managed to do this quite well, I think. i did not get lost trying to find a theory about data i don't have nor trying to get to work an API which appeared to be broken. Speaking of writing the app, first it was hard to get into the syntax of shiny, but after a while i got the hang of it and it was quite fun to work with it. I think that I will use it in the future for other projects as well.
+
+I also learned a lot about the structure of json files and how to extract the data i need from them. This was very interesting and i think i will use this knowledge in the future as well. Lastly, i struggled in the beginning with how to design the app, so it is useful for someone that doesn't know the data. After i drew it up on paper, it was much easier. I decided to go with a slim design so i wouldn't over strain the user.
+
+## 4. Achievements and Disappointments
+
+I am very happy with the result of the project.Ii think the app is useful for someone that is interested in cantonal initiatives and referendums. I think i will use it myself to see what cantons are voting about and if there are similarities between them.
+
+On the other hand, I am disappointed that i couldn't get the climate change part of the project to work. I think it would have been very interesting to see if there is a correlation between climate change and voting behavior. This is something I will pick up in the context of the seminar paper I will write about the effect of water scarcity on cooperation between countries.
+
+## 5. Conclusion
+
+Overall, I managed to build a solid and working web application. Also, I could apply many techniques that learned in this course, which is amazing. This includes working with github, setting up a project and using base R and tidyverse functions for data preparation. I also learned some new skills like using the shiny package to build web apps.
